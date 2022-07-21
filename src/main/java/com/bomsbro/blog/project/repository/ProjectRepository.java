@@ -1,4 +1,4 @@
-package com.bomsbro.blog.post.repository;
+package com.bomsbro.blog.project.repository;
 
 import com.bomsbro.blog.project.model.entity.Project;
 import org.springframework.data.domain.Page;

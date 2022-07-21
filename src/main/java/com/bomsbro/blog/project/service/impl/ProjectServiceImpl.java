@@ -17,8 +17,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject() {
-        return null;
+    public void createProject() {
+
     }
 
     @Override
@@ -27,8 +27,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project updateProject() {
-        return null;
+    public int updateProject() {
+        return 0;
     }
 
     @Override

@@ -14,45 +14,39 @@ import java.util.HashMap;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProjectController {
-    //Controller 에서 Dto<->Entity 전환
-    //DtoWrapper 로 감싸서 response
+    //TODO: Controller 에서 Dto<->Entity 전환
+    //TODO: DtoWrapper? ResponseEntity? 로 감싸서 response
     private final ProjectService projectService;
 
-    /*ProjectList RU*/
-    /*get all 이랑 굳이 구분할 필요 있을까?*/
-
+    /*ProjectList Get Patch*/
     @GetMapping("/projects")
     public ResponseEntity<ProjectDto>  getProjectList (@RequestParam HashMap<String, String> paramMap, Pageable pageable) {
         //with param
         return projectService.readProjectList();
     }
-
     @PatchMapping("/projects")
     public ResponseEntity<ProjectDto>  patchProjectList () {
-        //with body and param
+        //with body
         //patch에서 id리스트만 받으면 delete id와 다른 컬럼들을 함께 받으면 update
         return projectService.updateProjectList();
     }
 
-    /*Project CRUD*/
+    /*Project Post Get Put Delete */
     @PostMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  postProject () {
         //with path variable and body and optional param
         return projectService.createProject();
     }
-
     @GetMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  getProject () {
         //path variable and optional param
         return projectService.readProject();
     }
-
     @PutMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  putProject () {
         //path variable and body optional param
         return projectService.updateProject();
     }
-
     @DeleteMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  deleteProject () {
         //path variable and optional param

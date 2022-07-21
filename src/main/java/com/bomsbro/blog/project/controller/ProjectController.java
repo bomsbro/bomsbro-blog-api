@@ -21,13 +21,13 @@ public class ProjectController {
     /*ProjectList RU*/
     /*get all 이랑 굳이 구분할 필요 있을까?*/
 
-    @GetMapping("/posts")
+    @GetMapping("/projects")
     public ResponseEntity<ProjectDto>  getProjectList (@RequestParam HashMap<String, String> paramMap, Pageable pageable) {
         //with param
         return projectService.readProjectList();
     }
 
-    @PatchMapping("/posts")
+    @PatchMapping("/projects")
     public ResponseEntity<ProjectDto>  patchProjectList () {
         //with body and param
         //patch에서 id리스트만 받으면 delete id와 다른 컬럼들을 함께 받으면 update
@@ -35,25 +35,25 @@ public class ProjectController {
     }
 
     /*Project CRUD*/
-    @PostMapping("/posts")
+    @PostMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  postProject () {
         //with path variable and body and optional param
         return projectService.createProject();
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  getProject () {
         //path variable and optional param
         return projectService.readProject();
     }
 
-    @PutMapping("/posts")
+    @PutMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  putProject () {
         //path variable and body optional param
         return projectService.updateProject();
     }
 
-    @DeleteMapping("/posts")
+    @DeleteMapping("/projects/{projectId}")
     public ResponseEntity<ProjectDto>  deleteProject () {
         //path variable and optional param
         return projectService.deleteProject();

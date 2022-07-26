@@ -7,10 +7,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ProjectMapper extends GenericMapper<Project, ProjectDto> {
-    @Mapping(target = "reactions", ignore = true)
-    @Mapping(source = "board.id", target = "boardId")
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    ProjectDto convertToDto(Project post);
+    ProjectDto convertToDto(Project project);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    List<ProjectDto> convertEntityListToDto(List<Project> projects);
 }

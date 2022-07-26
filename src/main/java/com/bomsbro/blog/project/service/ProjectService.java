@@ -13,8 +13,8 @@ public interface ProjectService {
     //id 리스트만 받으면 deleteList,  id와 다른 컬럼들을 함께 받으면 해당 컬럼 update
 
     /*Project CRUD*/
-    public void createProject();
-    public Project readProject();
+    public Project createProject(Project project);
+    public Project readProject(long projectId);
     public int updateProject();
     public int deleteProject();
 }

@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> selectAll();
-    List<Project> selectByProjectId(long projectId);
-    Page<Project> selectByUserId(long userId , Pageable pageable);
+    List<Project> findAll();
+    //TODO: find by userId
+    // Page<Project> find(long userId , Pageable pageable);
+
+    Project findByProjectId(long projectId);
 }

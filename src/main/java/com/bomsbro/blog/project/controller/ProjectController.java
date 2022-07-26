@@ -1,6 +1,10 @@
 package com.bomsbro.blog.project.controller;
 
+import com.bomsbro.blog.post.model.dto.PostDto;
+import com.bomsbro.blog.post.model.dto.ResponseWrapper;
 import com.bomsbro.blog.project.model.dto.ProjectDto;
+import com.bomsbro.blog.project.model.entity.Project;
+import com.bomsbro.blog.project.model.mapper.ProjectMapper;
 import com.bomsbro.blog.project.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -17,39 +22,47 @@ public class ProjectController {
     //TODO: Controller 에서 Dto<->Entity 전환
     //TODO: DtoWrapper? ResponseEntity? 로 감싸서 response
     private final ProjectService projectService;
+    private final ProjectMapper projectMapper;
 
     /*ProjectList Get Patch*/
     @GetMapping("/projects")
-    public ResponseEntity<ProjectDto>  getProjectList (@RequestParam HashMap<String, String> paramMap, Pageable pageable) {
-        //with param
-        return projectService.readProjectList();
+    public ResponseEntity<ResponseWrapper<List<ProjectDto>>>  getProjectList (@RequestParam HashMap<String, String> paramMap, Pageable pageable) {
+        List<ProjectDto> projects = projectMapper.convertEntityListToDto(projectService.readProjectList());
+        return ResponseWrapper.ok(projects, "get post list success.");
     }
+
     @PatchMapping("/projects")
-    public ResponseEntity<ProjectDto>  patchProjectList () {
-        //with body
-        //patch에서 id리스트만 받으면 delete id와 다른 컬럼들을 함께 받으면 update
-        return projectService.updateProjectList();
+    public  ResponseEntity<ProjectDto> patchProjectList (){
+        /*TODO: For List CUD with Json Patch*/
+       // ResponseWrapper.ok(projects, "patch post list success.");
+        return null;
     }
 
     /*Project Post Get Put Delete */
-    @PostMapping("/projects/{projectId}")
-    public ResponseEntity<ProjectDto>  postProject () {
+    @PostMapping("/projects")
+    public ResponseEntity<ResponseWrapper<ProjectDto>>  postProject ( @RequestBody ProjectDto requestDto) {
         //with path variable and body and optional param
-        return projectService.createProject();
+        Project project = projectMapper.convertToEntity(requestDto);
+        ProjectDto responseDto = projectMapper.convertToDto(projectService.createProject(project));
+
+        return ResponseWrapper.created(responseDto, "Create Project Success.");
     }
     @GetMapping("/projects/{projectId}")
-    public ResponseEntity<ProjectDto>  getProject () {
+    public ResponseEntity<ResponseWrapper<ProjectDto>>  getProject (@PathVariable Long projectId) {
         //path variable and optional param
-        return projectService.readProject();
+        ProjectDto project = projectMapper.convertToDto(projectService.readProject(projectId));
+        return ResponseWrapper.ok(project, "get post list success.");
     }
     @PutMapping("/projects/{projectId}")
-    public ResponseEntity<ProjectDto>  putProject () {
+    public ResponseEntity<ProjectDto>  putProject (@PathVariable Long projectId) {
         //path variable and body optional param
-        return projectService.updateProject();
+        projectService.updateProject();
+        return null;
     }
     @DeleteMapping("/projects/{projectId}")
-    public ResponseEntity<ProjectDto>  deleteProject () {
+    public ResponseEntity<ProjectDto>  deleteProject (@PathVariable Long projectId) {
         //path variable and optional param
-        return projectService.deleteProject();
+        projectService.deleteProject();
+        return null;
     }
 }

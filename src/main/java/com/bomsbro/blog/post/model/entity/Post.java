@@ -17,4 +17,5 @@ public class Post {
     private String title;
     @Lob
     private String content; // html
+
 }

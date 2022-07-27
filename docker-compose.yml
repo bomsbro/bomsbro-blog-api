@@ -1,9 +1,0 @@
-version: '3.7'
-services:
-  nextjs:
-    container_name: bomsbro-blog-api
-    network_mode: "host"
-    build: ./
-    restart: always
-    environment:
-      - "ACTIVE=prod"

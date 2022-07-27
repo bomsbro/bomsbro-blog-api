@@ -9,7 +9,6 @@ RUN chmod +x ./gradlew
 RUN ./gradlew bootJar
 
 FROM openjdk:11
-ARG ACTIVE
 COPY --from=builder build/libs/*.jar app.jar
 
 EXPOSE 8080

@@ -2,7 +2,7 @@ spring:
   # Mysql Connection Settings
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://bomsbro.com:3306/bomsbro_blog?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.50.121:3306/bomsbro_blog?serverTimezone=Asia/Seoul
     username: bomsbro_api
     password: qwer1234!
   # Mysql JPA Settings

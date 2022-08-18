@@ -1,4 +1,8 @@
 spring:
+  # For Swagger 3.0
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:h2:tcp://localhost/~/h2_local_db
     driverClassName: org.h2.Driver

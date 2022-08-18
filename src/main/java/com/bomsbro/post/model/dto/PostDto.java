@@ -5,19 +5,16 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto {
-    private Long postId;
-    private Long boardId;
+    private Long id;
     private String title;
     private String content;
     private String previewText;
-    private String userId;
     private Integer viewCount;
     private Integer replyCount;
 

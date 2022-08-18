@@ -43,9 +43,9 @@ public class PostCategoryController {
 
     /*PostCategory Post Get Put Delete */
     @PostMapping("/post-categories")
-    public ResponseEntity<ResponseWrapper<PostCategoryDto>>  postPostCategory ( @RequestBody PostCategoryDto requestDto) {
+    public ResponseEntity<ResponseWrapper<PostCategoryDto>>  postPostCategory ( @RequestBody PostCategoryDto.PostPostCategoryRequestDto requestDto) {
         //with path variable and body and optional param
-        PostCategory postCategory = postCategoryMapper.convertToEntity(requestDto);
+        PostCategory postCategory = PostCategory.of(requestDto);
         PostCategoryDto responseDto = postCategoryMapper.convertToDto(postCategoryService.createPostCategory(postCategory));
 
         return ResponseWrapper.created(responseDto, "Create PostCategory Success.");

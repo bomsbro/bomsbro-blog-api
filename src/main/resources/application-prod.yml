@@ -1,4 +1,8 @@
 spring:
+  # For Swagger 3.0
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   # Mysql Connection Settings
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

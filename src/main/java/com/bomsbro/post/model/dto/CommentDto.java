@@ -12,12 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
-    private Long id;
-    private List<CommentDto> subReplies;
+    private Long commentId;
+    private String commentContent;
+
+    private List<CommentDto> subComments;
     private Long parentReplyId;
     private Long postId;
     private String userId;
-    private String content;
+
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

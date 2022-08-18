@@ -19,6 +19,10 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
     database-platform: org.hibernate.dialect.H2Dialect
+jwt:
+  header: Authorization
+  secret: ""
+  token-validity-in-seconds: 86400
 logging:
   level:
     org.hibernate.SQL: debug

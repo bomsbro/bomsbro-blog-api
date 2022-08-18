@@ -19,6 +19,10 @@ spring:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       format_sql: true
       ddl-auto: update
+jwt:
+  header: Authorization
+  secret: ""
+  token-validity-in-seconds: 86400
 logging:
   level:
     org.hibernate.SQL: debug

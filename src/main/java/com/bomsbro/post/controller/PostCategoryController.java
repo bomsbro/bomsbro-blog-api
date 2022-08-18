@@ -31,7 +31,7 @@ public class PostCategoryController {
     @GetMapping("/post-categories")
     public ResponseEntity<ResponseWrapper<List<PostCategoryDto>>> getPostCategoryList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
         List<PostCategoryDto> postCategorys = postCategoryMapper.convertEntityListToDto(postCategoryService.readPostCategoryList());
-        return ResponseWrapper.ok(postCategorys, "get post list success.");
+        return ResponseWrapper.ok(postCategorys, "Get post category list success.");
     }
 
     @PatchMapping("/post-categories")
@@ -48,13 +48,13 @@ public class PostCategoryController {
         PostCategory postCategory = PostCategory.of(requestDto);
         PostCategoryDto responseDto = postCategoryMapper.convertToDto(postCategoryService.createPostCategory(postCategory));
 
-        return ResponseWrapper.created(responseDto, "Create PostCategory Success.");
+        return ResponseWrapper.created(responseDto, "Post post category Success.");
     }
     @GetMapping("/post-categories/{postCategoryId}")
     public ResponseEntity<ResponseWrapper<PostCategoryDto>>  getPostCategory (@PathVariable Long postCategoryId) {
         //path variable and optional param
         PostCategoryDto postCategory = postCategoryMapper.convertToDto(postCategoryService.readPostCategory(postCategoryId));
-        return ResponseWrapper.ok(postCategory, "get post list success.");
+        return ResponseWrapper.ok(postCategory, "Get post category success.");
     }
     @PutMapping("/post-categories/{postCategoryId}")
     public ResponseEntity<PostCategoryDto>  putPostCategory (@PathVariable Long postCategoryId) {

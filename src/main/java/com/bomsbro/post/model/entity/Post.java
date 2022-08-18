@@ -11,6 +11,9 @@ import java.util.List;
 @Getter @Setter
 @SequenceGenerator(name = "post_sequence_generator"
         , sequenceName = "seq_post")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="post")
 public class Post {
 
     //PK

@@ -2,9 +2,7 @@ package com.bomsbro.post.model.entity;
 
 import com.bomsbro.post.model.dto.PostCategoryDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -15,6 +13,9 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="post_category")
 @SequenceGenerator(name = "post_category_sequence_generator"
         , sequenceName = "seq_post_category")
 public class PostCategory {

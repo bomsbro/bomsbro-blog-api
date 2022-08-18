@@ -1,7 +1,7 @@
 spring:
-  # For Swagger 3.0
   mvc:
     pathmatch:
+      # For Swagger 3.0
       matching-strategy: ant_path_matcher
   # Mysql Connection Settings
   datasource:
@@ -19,3 +19,6 @@ spring:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       format_sql: true
       ddl-auto: update
+logging:
+  level:
+    org.hibernate.SQL: debug

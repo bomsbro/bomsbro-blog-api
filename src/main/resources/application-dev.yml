@@ -19,9 +19,10 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
     database-platform: org.hibernate.dialect.H2Dialect
+#TODO: Change Secret Key
 jwt:
   header: Authorization
-  secret: ""
+  secret: "Ym9tc2Jyby1ibG9nLXByb2plY3QK"
   token-validity-in-seconds: 86400
 logging:
   level:

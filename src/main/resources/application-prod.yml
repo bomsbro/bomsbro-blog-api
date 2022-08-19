@@ -18,9 +18,10 @@ spring:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       format_sql: true
       ddl-auto: update
+#TODO: Change Secret Key
 jwt:
   header: Authorization
-  secret: ""
+  secret: "Ym9tc2Jyby1ibG9nLXByb2plY3QK"
   token-validity-in-seconds: 86400
 
 logging:

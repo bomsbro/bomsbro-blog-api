@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SequenceGenerator(name = "post_sequence_generator"
         , sequenceName = "seq_post")
+@Table(name="authority")
 public class Authority {
 
     //PK

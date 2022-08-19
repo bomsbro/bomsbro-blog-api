@@ -5,9 +5,11 @@ import com.bomsbro.post.model.entity.PostCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="user")
 public class User {
     //PK
     @Id
@@ -23,6 +26,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
+
+    //Columns
+    @Column(name = "user_name", length=500, unique = true)
+    private String name;
+
+    @Column(name = "user_password", length=50, unique = true)
+    private long password;
+
+    @Column(name = "user_nickname", length=50, unique = true)
+    private String nickname;
+
+    @Column(name = "user_activated")
+    private Boolean activated;
 
     //Join
     @ManyToMany
@@ -33,16 +49,4 @@ public class User {
     )
     private Set<Authority> authorities;
 
-    //Columns
-    @Column(name = "user_password")
-    private long password;
-
-    @Column(name = "user_name", length=50, unique = true)
-    private String name;
-
-    @Column(name = "user_nickname", length=50, unique = true)
-    private String nickname;
-
-    @Column(name = "activated")
-    private Boolean activated;
 }

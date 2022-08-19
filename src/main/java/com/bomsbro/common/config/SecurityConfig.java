@@ -1,8 +1,9 @@
 package com.bomsbro.common.config;
 
-import com.bomsbro.common.security.jwt.JwtAccessDeniedHandler;
-import com.bomsbro.common.security.jwt.JwtAuthenticationEntryPoint;
-import com.bomsbro.common.security.jwt.TokenProvider;
+
+import com.bomsbro.common.security.JwtAccessDeniedHandler;
+import com.bomsbro.common.security.JwtAuthenticationEntryPoint;
+import com.bomsbro.common.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) //preAuthorize 어노테이션을 메소드에 추가하기 위해 사용
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -36,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "ROLE_admin > ROLE_member \n " +
-                "ROLE_member > ROLE_guest";
+        String hierarchy = "ROLE_admin > ROLE_user \n " +
+                "ROLE_user > ROLE_guest";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
@@ -67,10 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // CSRF 설정 Disable
+        // 세션을 사용하지 않는 tokken 방식을 사용하기 위해 CSRF 설정 Disable
         http.csrf().disable()
 
-                // exception handling 할 때 우리가 만든 클래스를 추가
+                // exception handling 할 때 우리가 만든 클래스 entypoint, denied 등.. 을 추가
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)

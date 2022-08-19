@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property name="logPath"		value="/home/bomsbro/springlog" />
+    <property name="fileName"		value="blog-spring-log" />
+    <property name="maxHistory"		value="30" />
+    <property name="maxFileSize"	value="100MB" />
+    <property name="consolePattern"	value="[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n" />
+    <property name="filePattern"    value="%-4relative [%thread] %-5level %logger{35} - %msg%n"/>
+
+    <!-- Log Appender Module -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${consolePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="file-logging">
+        <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${logPath}/${fileName}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${logPath}/LOG_%d{yyyy-MM-dd}_${fileName}.%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${filePattern}</pattern>
+            </encoder>
+        </appender>
+    </springProfile>
+
+    <root level="info">
+        <appender-ref ref="console" />
+        <springProfile name="file-logging">
+            <appender-ref ref="file" />
+        </springProfile>
+    </root>
+</configuration>

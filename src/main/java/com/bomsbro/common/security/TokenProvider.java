@@ -1,84 +1,80 @@
 package com.bomsbro.common.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
+
+import com.bomsbro.user.model.entity.User;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
-import java.io.Serializable;
 import java.security.Key;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class TokenProvider {
-
-
+public class TokenProvider implements InitializingBean {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "bearer";
-    private static final String DEFAULT_ROLE_PREFIX = "ROLE_";
-    private static final String TOKEN_ACCOUNT_ID = "accountId";
-    private static final String TOKEN_USER_MAP = "userMap";
-    private static final String HEADER_USER_ID = "WAPL-User-Id";
-    private static final String HEADER_ACCOUNT_ID = "WAPL-Account-Id";
+    private static final String HEADER_USER_ID = "User-Id";
 
-    private final Key key;
+    private final String secretKey;
+    private final long tokenValidityInMilliseconds;
 
-    public TokenProvider(@Value("${jwt.secret}") String secretKey) throws CertificateException {
-        System.out.println("secretKey = " + secretKey);
-        System.out.println("System.getenv(\"SECRET_KEY\") = " + System.getenv("SECRET_KEY"));
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        CertificateFactory cf = CertificateFactory.getInstance("X509");
-        X509Certificate certificate = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(keyBytes));
-        this.key = certificate.getPublicKey();
+    private Key key;
+
+    public TokenProvider(
+            @Value("${jwt.secret}") String secretKey,
+            @Value("${jwt.token-validity-in-seconds}") long tokenVailidityInSeconds) {
+        this.secretKey = secretKey;
+        this.tokenValidityInMilliseconds = tokenVailidityInSeconds * 1000;
     }
 
-    public Authentication getAuthentication(String accessToken, HttpServletRequest request) {
-        // 토큰 복호화
-        Claims claims = parseClaims(accessToken);
+    public String createToken (Authentication authentication) {
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
-        // 호출 캐릭터 uuid
+        long now = (new Date()).getTime();
+        Date validity = new Date(now+this.tokenValidityInMilliseconds);
+
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(validity)
+                .compact();
+    }
+
+    public Authentication getAuthentication(String token, HttpServletRequest request) {
+        //token으로 claim(payload에 들어갈 정보)을 만들고 이를 이용해 user를 만든 후 authentification을 리턴
         String uuid = request.getHeader(HEADER_USER_ID);
 
-        // get WAPL data from JWT
-        Long accountId = claims.get(TOKEN_ACCOUNT_ID, Long.class);
-        Map<String, Object> userMap = claims.get(TOKEN_USER_MAP, Map.class);
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
-        CustomPrincipal principal = new CustomPrincipal();
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
-        // 호출 캐릭터 정보가 유효하다면 custom principal 및 authorities 세팅
-        if(StringUtils.hasText(uuid) && userMap != null && userMap.get(uuid) != null){
+        User principal = new User(claims.getSubject(), "", authorities);
 
-            ObjectMapper mapper = new ObjectMapper();
-            MapperObject user = mapper.convertValue(userMap.get(uuid), MapperObject.class);
-
-            principal.setAccountId(accountId);
-            principal.setUserId(uuid);
-            principal.setGroupId(user.getGroupId());
-
-            authorities.add(new SimpleGrantedAuthority(DEFAULT_ROLE_PREFIX + user.getRole()));
-        }
-        // 유효하지 않다면 계정 정보만 세팅
-        else {
-            principal.setAccountId(accountId);
-        }
-        // 인증된 Authentication 객체 생성하여 리턴
-        return new UsernamePasswordAuthenticationToken(principal, null, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
     public boolean validateToken(String token) {
@@ -97,18 +93,9 @@ public class TokenProvider {
         return false;
     }
 
-    private Claims parseClaims(String accessToken) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
-        }
-    }
-
-    @Getter
-    static class MapperObject implements Serializable {
-        private Long groupId;
-        private String role;
-
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 }

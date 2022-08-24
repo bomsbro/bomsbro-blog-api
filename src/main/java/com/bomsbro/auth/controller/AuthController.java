@@ -33,7 +33,7 @@ public class AuthController {
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         // loginDto로 UsernamePasswordAuthenticationToken 객체 생성
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getUserPassword());
 
         // authenticationToken을 이용해서 Authentication객체를 생성하고, authenticate실행. 내부에서 우리가만든 loadUserByUsername이 실행됨.
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

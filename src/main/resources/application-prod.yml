@@ -15,7 +15,7 @@ spring:
     open-in-view: false
     generate-ddl: true
     hibernate:
-      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      dialect: org.hisbernate.dialect.MySQL5InnoDBDialect
       format_sql: true
       ddl-auto: update
 #TODO: Change Secret Key

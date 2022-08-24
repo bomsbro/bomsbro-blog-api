@@ -1,8 +1,7 @@
-INSERT INTO USER (USER_ID, USER_PASSWORD, USER_NAME,  NICKNAME, ACTIVATED)
-VALUES (1, 'admin', 'qwer1234!', 'bomsbro', true);
+INSERT INTO user (USER_ID, USER_NAME, USER_PASSWORD, USER_NICKNAME, USER_ACTIVATED) values (1, 'admin', 'qwer1234!', 'bomsbro', 1);
 
-INSERT INTO AUTHORITY (AUTH_NAME) VALUES ('ROLE_USER');
-INSERT INTO AUTHORITY (AUTH_NAME) VALUES ('ROLE_ADMIN');
+INSERT INTO authority (AUTH_ID, AUTH_NAME) VALUES (1, 'ROLE_USER');
+INSERT INTO authority (AUTH_ID, AUTH_NAME) VALUES (2, 'ROLE_ADMIN');
 
-INSERT INTO USER_AUTHORITY (user_id, auth_name) values (1, 1);
-INSERT INTO USER_AUTHORITY (user_id, auth_name) values (1, 2);
+INSERT INTO user_authority (user_id, AUTH_ID) values (1, 1);
+INSERT INTO user_authority (user_id, AUTH_ID) values (1, 2);

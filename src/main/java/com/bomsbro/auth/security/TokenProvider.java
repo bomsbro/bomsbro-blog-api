@@ -1,7 +1,6 @@
-package com.bomsbro.common.security;
+package com.bomsbro.auth.security;
 
 
-import com.bomsbro.user.model.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -12,13 +11,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -56,7 +56,7 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token, HttpServletRequest request) {
+    public Authentication getAuthentication(String accessToken, HttpServletRequest request) {
         //token으로 claim(payload에 들어갈 정보)을 만들고 이를 이용해 user를 만든 후 authentification을 리턴
         String uuid = request.getHeader(HEADER_USER_ID);
 
@@ -64,17 +64,18 @@ public class TokenProvider implements InitializingBean {
                 .parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(accessToken)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
+        Set<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "",  authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        // 인증된 Authentication 객체 생성하여 리턴
+        return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 
     public boolean validateToken(String token) {

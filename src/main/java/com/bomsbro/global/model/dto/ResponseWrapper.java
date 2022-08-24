@@ -1,4 +1,4 @@
-package com.bomsbro.common.model.dto;
+package com.bomsbro.global.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

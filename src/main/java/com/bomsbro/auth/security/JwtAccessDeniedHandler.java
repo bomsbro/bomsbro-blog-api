@@ -1,4 +1,4 @@
-package com.bomsbro.common.security;
+package com.bomsbro.auth.security;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

@@ -1,6 +1,6 @@
 package com.bomsbro.post.model.mapper;
 
-import com.bomsbro.common.model.mapper.GenericMapper;
+import com.bomsbro.global.model.mapper.GenericMapper;
 import com.bomsbro.post.model.dto.PostDto;
 import com.bomsbro.post.model.entity.Post;
 import org.mapstruct.BeanMapping;

@@ -1,4 +1,4 @@
-package com.bomsbro.common.security;
+package com.bomsbro.auth.security;
 
 
 import lombok.RequiredArgsConstructor;

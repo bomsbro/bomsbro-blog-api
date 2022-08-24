@@ -1,7 +1,7 @@
-package com.bomsbro.common.config;
+package com.bomsbro.auth.config;
 
-import com.bomsbro.common.security.JwtFilter;
-import com.bomsbro.common.security.TokenProvider;
+import com.bomsbro.auth.security.JwtFilter;
+import com.bomsbro.auth.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

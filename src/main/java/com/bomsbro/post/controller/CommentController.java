@@ -1,6 +1,6 @@
 package com.bomsbro.post.controller;
 
-import com.bomsbro.common.model.dto.ResponseWrapper;
+import com.bomsbro.global.model.dto.ResponseWrapper;
 import com.bomsbro.post.model.dto.CommentDto;
 import com.bomsbro.post.model.entity.Comment;
 import com.bomsbro.post.model.mapper.CommentMapper;

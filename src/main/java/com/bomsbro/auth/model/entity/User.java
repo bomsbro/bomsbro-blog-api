@@ -1,16 +1,9 @@
-package com.bomsbro.user.model.entity;
+package com.bomsbro.auth.model.entity;
 
-import com.bomsbro.post.model.entity.Comment;
-import com.bomsbro.post.model.entity.PostCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +11,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name="user")
 public class User {
     //PK
@@ -28,25 +22,27 @@ public class User {
     private Long userId;
 
     //Columns
+    @NonNull
     @Column(name = "user_name", length=500, unique = true)
-    private String name;
+    private String userName;
 
+    @NonNull
     @Column(name = "user_password", length=50, unique = true)
-    private long password;
+    private String userPassword;
 
     @Column(name = "user_nickname", length=50, unique = true)
-    private String nickname;
+    private String userNickname;
 
     @Column(name = "user_activated")
-    private Boolean activated;
+    private Boolean userActivated;
 
     //Join
+    @NonNull
     @ManyToMany
     @JoinTable(
-            name = "user_authtoriy",
+            name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name="auth_name", referencedColumnName = "auth_id")}
+            inverseJoinColumns = {@JoinColumn(name="auth_id", referencedColumnName = "auth_id")}
     )
-    private Set<Authority> authorities;
-
+    private Set<Authority> userAuthorities;
 }

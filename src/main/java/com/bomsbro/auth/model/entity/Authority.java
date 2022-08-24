@@ -1,4 +1,4 @@
-package com.bomsbro.user.model.entity;
+package com.bomsbro.auth.model.entity;
 
 
 import lombok.*;
@@ -11,18 +11,18 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@SequenceGenerator(name = "post_sequence_generator"
-        , sequenceName = "seq_post")
+@SequenceGenerator(name = "auth_sequence_generator"
+        , sequenceName = "seq_auth")
 @Table(name="authority")
 public class Authority {
 
     //PK
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_post")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_auth")
     @Column(name = "auth_id")
     private Long authorityId;
 
     //Columns
     @Column(name = "auth_name")
-    private String name;
+    private String authorityName;
 }

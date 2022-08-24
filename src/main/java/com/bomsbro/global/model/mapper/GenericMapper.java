@@ -1,4 +1,4 @@
-package com.bomsbro.common.model.mapper;
+package com.bomsbro.global.model.mapper;
 
 import org.mapstruct.*;
 

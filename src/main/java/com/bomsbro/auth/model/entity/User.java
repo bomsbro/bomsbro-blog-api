@@ -27,7 +27,7 @@ public class User {
     private String userName;
 
     @NonNull
-    @Column(name = "user_password", length=50, unique = true)
+    @Column(name = "user_password",length = 100, unique = true)
     private String userPassword;
 
     @Column(name = "user_nickname", length=50, unique = true)

@@ -1,0 +1,48 @@
+name: bomsbro-blog-api
+
+on:
+  push:
+    branches: [ "master" ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      # CHECK OUT TO $GITHUB_WORKSPACE
+      - name: Check out
+        uses: actions/checkout@v3
+        
+      # BUILD IMAGE
+      - name: Compose Images
+        run: 
+          docker-compose up -d --build
+          
+      # PULL AND LEARN IMAGE ON INSTANCE
+      - name: Deploy Proxy
+        run: bash ${GITHUB_WORKSPACE}/scripts/bomsbro-blog-web-app-nginx-deploy.sh 
+          ${{secrets.REMOTE_HOST}} 
+          ${{secrets.REMOTE_SSH_PORT}} 
+          ${{secrets.REMOTE_USERNAME}} 
+          ${{secrets.REMOTE_PASSWORD}}
+          'bomsbro-blog-api'
+          
+      # CLEAN UP IMAGES ON INSTACE
+      - name: Prune Images
+        run:  sshpass -p $REMOTE_PASSWORD ssh -p $REMOTE_SSH_PORT $REMOTE_USERNAME@$REMOTE_HOST -o StrictHostKeyChecking=no 'docker image prune'
+
+      # SING IN DOCKER HUB
+      - name: Sign in
+        uses: docker/login-action@v1
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
+          
+      # BACK UP IMAGE ON DOCKER HUB REPOSITORY
+      - name: Release images
+        env:
+          NAME: ${{secrets.DOCKERHUB_USERNAME}} # 계정 명
+          REPO: ${{secrets.DOCKERHUB_PASSWORD}} # 레포 이름
+        run: 
+          docker tag $REPO:latest $NAME/$REPO:latest
+          docker push $NAME/$REPO:latest      
+

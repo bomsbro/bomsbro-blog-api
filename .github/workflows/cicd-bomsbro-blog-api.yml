@@ -18,7 +18,7 @@ jobs:
           docker-compose up -d --build
           
       # PULL AND LEARN IMAGE ON INSTANCE
-      - name: Deploy Proxy
+      - name: Deploy API
         run: bash ${GITHUB_WORKSPACE}/scripts/bomsbro-blog-api-spring-deploy.sh
           ${{secrets.REMOTE_HOST}} 
           ${{secrets.REMOTE_SSH_PORT}} 

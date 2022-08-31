@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
     //TODO: Controller 에서 Dto<->Entity 전환
@@ -24,13 +24,13 @@ public class PostController {
     private final PostMapper postMapper;
 
     /*PostList Get Patch*/
-    @GetMapping("/posts")
+    @GetMapping("")
     public ResponseEntity<ResponseWrapper<List<PostDto>>> getPostList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
         List<PostDto> posts = postMapper.convertEntityListToDto(postService.readPostList());
         return ResponseWrapper.ok(posts, "get post list success.");
     }
 
-    @PatchMapping("/posts")
+    @PatchMapping("")
     public ResponseEntity<PostDto> patchPostList (){
         /*TODO: For List CUD with Json Patch*/
         // ResponseWrapper.ok(posts, "patch post list success.");
@@ -38,7 +38,7 @@ public class PostController {
     }
 
     /*Post Post Get Put Delete */
-    @PostMapping("/posts")
+    @PostMapping("")
     public ResponseEntity<ResponseWrapper<PostDto>>  postPost ( @RequestBody PostDto requestDto) {
         //with path variable and body and optional param
         Post post = postMapper.convertToEntity(requestDto);
@@ -46,19 +46,19 @@ public class PostController {
 
         return ResponseWrapper.created(responseDto, "Create Post Success.");
     }
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public ResponseEntity<ResponseWrapper<PostDto>>  getPost (@PathVariable Long postId) {
         //path variable and optional param
         PostDto post = postMapper.convertToDto(postService.readPost(postId));
         return ResponseWrapper.ok(post, "get post list success.");
     }
-    @PutMapping("/posts/{postId}")
+    @PutMapping("/{postId}")
     public ResponseEntity<PostDto>  putPost (@PathVariable Long postId) {
         //path variable and body optional param
         postService.updatePost();
         return null;
     }
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity<PostDto>  deletePost (@PathVariable Long postId) {
         //path variable and optional param
         postService.deletePost();

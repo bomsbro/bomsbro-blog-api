@@ -20,7 +20,7 @@ import java.util.List;
 //TODO: 복수의 자료는 json patch 사용
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/post-categories")
 @RequiredArgsConstructor
 public class PostCategoryController {
 
@@ -28,13 +28,13 @@ public class PostCategoryController {
     private final PostCategoryMapper postCategoryMapper;
 
     /*PostCategoryList Get Patch*/
-    @GetMapping("/post-categories")
+    @GetMapping("")
     public ResponseEntity<ResponseWrapper<List<PostCategoryDto>>> getPostCategoryList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
         List<PostCategoryDto> postCategorys = postCategoryMapper.convertEntityListToDto(postCategoryService.readPostCategoryList());
         return ResponseWrapper.ok(postCategorys, "Get post category list success.");
     }
 
-    @PatchMapping("/post-categories")
+    @PatchMapping("")
     public  ResponseEntity<PostCategoryDto> patchPostCategoryList (){
         /*TODO: For List CUD with Json Patch*/
         // ResponseWrapper.ok(postCategorys, "patch post list success.");
@@ -42,7 +42,7 @@ public class PostCategoryController {
     }
 
     /*PostCategory Post Get Put Delete */
-    @PostMapping("/post-categories")
+    @PostMapping("")
     public ResponseEntity<ResponseWrapper<PostCategoryDto>>  postPostCategory ( @RequestBody PostCategoryDto.PostPostCategoryRequestDto requestDto) {
         //with path variable and body and optional param
         PostCategory postCategory = PostCategory.of(requestDto);
@@ -50,19 +50,19 @@ public class PostCategoryController {
 
         return ResponseWrapper.created(responseDto, "Post post category Success.");
     }
-    @GetMapping("/post-categories/{postCategoryId}")
+    @GetMapping("/{postCategoryId}")
     public ResponseEntity<ResponseWrapper<PostCategoryDto>>  getPostCategory (@PathVariable Long postCategoryId) {
         //path variable and optional param
         PostCategoryDto postCategory = postCategoryMapper.convertToDto(postCategoryService.readPostCategory(postCategoryId));
         return ResponseWrapper.ok(postCategory, "Get post category success.");
     }
-    @PutMapping("/post-categories/{postCategoryId}")
+    @PutMapping("/{postCategoryId}")
     public ResponseEntity<PostCategoryDto>  putPostCategory (@PathVariable Long postCategoryId) {
         //path variable and body optional param
         postCategoryService.updatePostCategory();
         return null;
     }
-    @DeleteMapping("/post-categories/{postCategoryId}")
+    @DeleteMapping("/{postCategoryId}")
     public ResponseEntity<PostCategoryDto>  deletePostCategory (@PathVariable Long postCategoryId) {
         //path variable and optional param
         postCategoryService.deletePostCategory();

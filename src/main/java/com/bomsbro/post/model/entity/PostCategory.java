@@ -24,7 +24,7 @@ public class PostCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_post_category")
     @Column(name = "pca_id")
-    private Long postCategoryId;
+    private Long id;
 
     //Join
     @BatchSize(size = 40)

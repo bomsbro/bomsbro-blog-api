@@ -20,7 +20,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_post")
     @Column(name = "post_id")
-    private Long postId;
+    private Long id;
 
     //FK
     @ManyToOne(fetch = FetchType.LAZY)

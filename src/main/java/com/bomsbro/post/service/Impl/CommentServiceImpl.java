@@ -35,19 +35,22 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment readComment(long commentId) {
-        return commentRepository.findByCommentId(commentId);
+        return commentRepository
+                .findById(commentId)
+                .orElseThrow();
     }
 
     @Override
     @Transactional
-    public int updateComment() {
-        return 0;
+    public Comment updateComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 
     @Override
     @Transactional
-    public int deleteComment() {
-        return 0;
+    public int deleteComment(long commentId) {
+        commentRepository.delete(readComment(commentId));
+        return 1;
     }
 
 }

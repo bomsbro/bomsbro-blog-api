@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/post-categories/{postCategoryId}/posts/{postId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
     //TODO: Controller 에서 Dto<->Entity 전환
@@ -52,15 +52,16 @@ public class CommentController {
         return ResponseWrapper.ok(comment, "get post list success.");
     }
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDto>  putComment (@PathVariable Long commentId) {
+    public ResponseEntity<CommentDto>  putComment (@PathVariable Long commentId, @RequestBody CommentDto requestDto) {
         //path variable and body optional param
-        commentService.updateComment();
+        Comment comment = commentMapper.convertToEntity(requestDto);
+        commentService.updateComment(comment);
         return null;
     }
     @DeleteMapping("/{commentId}")
     public ResponseEntity<CommentDto>  deleteComment (@PathVariable Long commentId) {
         //path variable and optional param
-        commentService.deleteComment();
+        commentService.deleteComment(commentId);
         return null;
     }
 }

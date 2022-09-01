@@ -5,6 +5,7 @@ import com.bomsbro.post.model.entity.Post;
 import com.bomsbro.post.repository.PostRepository;
 import com.bomsbro.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +19,8 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public List<Post> readPostList() {
-        return postRepository.findAll();
+    public List<Post> readPostList(long postCategoryId, Pageable pageable) {
+        return postRepository.findPostsByPostCategoryId(postCategoryId, pageable).toList();
     }
 
     @Override
@@ -36,19 +37,22 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post readPost(long postId) {
-        return postRepository.findByPostId(postId);
+        return postRepository
+                .findById(postId)
+                .orElseThrow();
     }
 
     @Override
     @Transactional
-    public int updatePost() {
-        return 0;
+    public Post updatePost(Post post) {
+        return postRepository.save(post);
     }
 
     @Override
     @Transactional
-    public int deletePost() {
-        return 0;
+    public int deletePost(long postId) {
+        postRepository.delete(readPost(postId));
+        return 1;
     }
 
 }

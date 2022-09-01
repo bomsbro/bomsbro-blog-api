@@ -37,19 +37,22 @@ public class PostCategoryServiceImpl implements PostCategoryService {
 
     @Override
     public PostCategory readPostCategory(long postCategoryId) {
-        return postCategoryRepository.findByPostCategoryId(postCategoryId);
+        return postCategoryRepository
+                .findById(postCategoryId)
+                .orElseThrow();
     }
 
     @Override
     @Transactional
-    public int updatePostCategory() {
-        return 0;
+    public PostCategory updatePostCategory (PostCategory postCategory) {
+        return postCategoryRepository.save(postCategory);
     }
 
     @Override
     @Transactional
-    public int deletePostCategory() {
-        return 0;
+    public int deletePostCategory(long postCategoryId) {
+        postCategoryRepository.delete(readPostCategory(postCategoryId));
+        return 1;
     }
 
 }

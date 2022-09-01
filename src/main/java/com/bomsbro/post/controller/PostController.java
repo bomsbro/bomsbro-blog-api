@@ -8,6 +8,7 @@ import com.bomsbro.post.model.mapper.PostMapper;
 import com.bomsbro.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/post-categories/{postCategoryId}/posts")
 @RequiredArgsConstructor
 public class PostController {
     //TODO: Controller 에서 Dto<->Entity 전환
@@ -25,8 +26,9 @@ public class PostController {
 
     /*PostList Get Patch*/
     @GetMapping("")
-    public ResponseEntity<ResponseWrapper<List<PostDto>>> getPostList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
-        List<PostDto> posts = postMapper.convertEntityListToDto(postService.readPostList());
+    public ResponseEntity<ResponseWrapper<List<PostDto>>> getPostList (@PathVariable HashMap<String, String> pathMap, @RequestParam HashMap<String, String> paramMap, Pageable pageable) {
+        long postCategoryId = Integer.parseInt(pathMap.get("postCategoryId"));
+        List<PostDto> posts = postMapper.convertEntityListToDto(postService.readPostList(postCategoryId, pageable));
         return ResponseWrapper.ok(posts, "get post list success.");
     }
 
@@ -53,15 +55,16 @@ public class PostController {
         return ResponseWrapper.ok(post, "get post list success.");
     }
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDto>  putPost (@PathVariable Long postId) {
+    public ResponseEntity<PostDto>  putPost (@PathVariable Long postId,  @RequestBody PostDto requestDto) {
         //path variable and body optional param
-        postService.updatePost();
+        Post post = postMapper.convertToEntity(requestDto);
+        postService.updatePost(post);
         return null;
     }
     @DeleteMapping("/{postId}")
     public ResponseEntity<PostDto>  deletePost (@PathVariable Long postId) {
         //path variable and optional param
-        postService.deletePost();
+        postService.deletePost(postId);
         return null;
     }
 }

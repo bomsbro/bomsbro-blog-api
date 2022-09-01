@@ -13,6 +13,6 @@ public interface PostCategoryService {
     /*PostCategory CRUD*/
     public PostCategory createPostCategory(PostCategory postCategory);
     public PostCategory readPostCategory(long postCategoryId);
-    public int updatePostCategory();
-    public int deletePostCategory();
+    public PostCategory updatePostCategory(PostCategory postCategory);
+    public int deletePostCategory(long postCategoryId);
 }

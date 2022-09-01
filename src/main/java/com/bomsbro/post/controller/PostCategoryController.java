@@ -57,15 +57,16 @@ public class PostCategoryController {
         return ResponseWrapper.ok(postCategory, "Get post category success.");
     }
     @PutMapping("/{postCategoryId}")
-    public ResponseEntity<PostCategoryDto>  putPostCategory (@PathVariable Long postCategoryId) {
+    public ResponseEntity<PostCategoryDto>  putPostCategory (@PathVariable Long postCategoryId, @RequestBody PostCategoryDto.PostPostCategoryRequestDto requestDto) {
         //path variable and body optional param
-        postCategoryService.updatePostCategory();
+        PostCategory postCategory = PostCategory.of(requestDto);
+        postCategoryService.updatePostCategory(postCategory);
         return null;
     }
     @DeleteMapping("/{postCategoryId}")
     public ResponseEntity<PostCategoryDto>  deletePostCategory (@PathVariable Long postCategoryId) {
         //path variable and optional param
-        postCategoryService.deletePostCategory();
+        postCategoryService.deletePostCategory(postCategoryId);
         return null;
     }
 }

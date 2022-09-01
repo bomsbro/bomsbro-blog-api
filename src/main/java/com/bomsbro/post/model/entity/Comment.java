@@ -24,7 +24,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_comment")
     @Column(name = "cmt_id")
-    private Long commentId;
+    private Long id;
 
     //FK
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,5 +33,5 @@ public class Comment {
 
     //Columns
     @Column(name = "cmt_content")
-    private String commentContent;
+    private String content;
 }

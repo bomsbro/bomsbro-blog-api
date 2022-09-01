@@ -13,6 +13,6 @@ public interface CommentService {
     /*Comment CRUD*/
     public Comment createComment(Comment comment);
     public Comment readComment(long commentId);
-    public int updateComment();
-    public int deleteComment();
+    public Comment updateComment(Comment comment);
+    public int deleteComment(long commentId);
 }

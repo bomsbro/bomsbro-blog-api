@@ -1,5 +1,6 @@
 package com.bomsbro.post.model.entity;
 
+import com.bomsbro.global.model.entity.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="post")
-public class Post {
+public class Post extends BaseTimeEntity {
 
     //PK
     @Id
@@ -44,8 +45,8 @@ public class Post {
     private String previewText;
 
     @Column(name = "post_view_count")
-    private Integer viewCount;
+    private Long viewCount;
 
     @Column(name = "post_reply_count")
-    private Integer replyCount;
+    private Long replyCount;
 }

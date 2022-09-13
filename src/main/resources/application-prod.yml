@@ -27,9 +27,9 @@ spring:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       format_sql: true
       ddl-auto: update
-    sql:
-      init:
-        mode: always
+  sql:
+    init:
+      mode: always
 #TODO: Change Secret Key
 jwt:
   header: Authorization

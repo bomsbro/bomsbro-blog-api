@@ -26,14 +26,10 @@ jobs:
           ${{secrets.REMOTE_PASSWORD}}
           'bomsbro-blog-api_spring'
 
-      # Install Expect
-      - name: Install Expect
-        run: |
-          sudo apt-get install expect \
-
       # CLEAN UP IMAGES ON INSTANCE
       - name: Prune Images
         run: |
+          sudo apt-get install expect
           expect -c " \
           set timeout 5 \
           spawn sshpass -p $REMOTE_PASSWORD ssh -p $REMOTE_SSH_PORT $REMOTE_USERNAME@$REMOTE_HOST -o StrictHostKeyChecking=no \'docker image prune\' \

@@ -27,7 +27,7 @@ jobs:
           'bomsbro-blog-api_spring'
 
       # Install Expect
-      -name: Install Expect
+      - name: Install Expect
         run: |
           sudo apt-get install expect \
 

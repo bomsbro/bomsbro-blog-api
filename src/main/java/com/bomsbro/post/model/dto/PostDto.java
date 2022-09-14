@@ -14,7 +14,9 @@ public class PostDto {
 
     private Long id;
     private Long postCategoryId;
-    private Long userId;
+    private String postCategoryName;
+    private Long writerId;
+    private String writerName;
 
     private String title;
     private String content;
@@ -35,5 +37,27 @@ public class PostDto {
     public PostDto addReplyCount(Integer replyCount) {
         this.replyCount = replyCount;
         return this;
+    }
+
+    //Request DTO. Get, Delete does not have request body.
+    @Setter @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PostRequest {
+        private String name;
+    }
+
+    @Setter @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutRequest {
+        private String name;
+    }
+
+    @Setter @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ListPatchRequest {
+        private String name;
     }
 }

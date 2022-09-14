@@ -38,7 +38,13 @@ public class PostCategory {
     private Long order;
 
     //builder
-    public static PostCategory of(PostCategoryDto.PostPostCategoryRequestDto dto) {
+    public static PostCategory of(PostCategoryDto.PostRequest dto) {
+        return PostCategory.builder()
+                .name(dto.getName())
+                .build();
+    }
+
+    public static PostCategory of(PostCategoryDto.PutRequest dto) {
         return PostCategory.builder()
                 .name(dto.getName())
                 .build();

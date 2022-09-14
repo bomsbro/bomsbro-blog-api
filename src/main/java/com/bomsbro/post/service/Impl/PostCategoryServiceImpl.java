@@ -2,7 +2,9 @@ package com.bomsbro.post.service.Impl;
 
 
 
+import com.bomsbro.post.model.dto.PostCategoryDto;
 import com.bomsbro.post.model.entity.PostCategory;
+import com.bomsbro.post.model.mapper.PostCategoryMapper;
 import com.bomsbro.post.repository.PostCategoryRepository;
 import com.bomsbro.post.service.PostCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +19,11 @@ import java.util.List;
 public class PostCategoryServiceImpl implements PostCategoryService {
 
     private final PostCategoryRepository postCategoryRepository;
+    private final PostCategoryMapper postCategoryMapper;
 
     @Override
-    public List<PostCategory> readPostCategoryList() {
-        return postCategoryRepository.findAll();
+    public List<PostCategoryDto> readPostCategoryList() {
+        return postCategoryMapper.convertEntityListToDto(postCategoryRepository.findAll());
     }
 
     @Override
@@ -31,27 +34,37 @@ public class PostCategoryServiceImpl implements PostCategoryService {
 
     @Override
     @Transactional
-    public PostCategory createPostCategory(PostCategory postCategory) {
-        return postCategoryRepository.save(postCategory);
+    public PostCategoryDto createPostCategory(PostCategoryDto.PostRequest requestDto) {
+        PostCategory postCategory = PostCategory.of(requestDto);
+        return postCategoryMapper.convertToDto(postCategoryRepository.save(postCategory));
     }
 
     @Override
-    public PostCategory readPostCategory(long postCategoryId) {
-        return postCategoryRepository
+    public PostCategoryDto readPostCategory(long postCategoryId) {
+        return postCategoryMapper.convertToDto(
+                postCategoryRepository
                 .findById(postCategoryId)
-                .orElseThrow();
+                .orElseThrow()
+        );
     }
 
     @Override
     @Transactional
-    public PostCategory updatePostCategory (PostCategory postCategory) {
-        return postCategoryRepository.save(postCategory);
+    public PostCategoryDto updatePostCategory (PostCategoryDto.PutRequest requestDto) {
+        PostCategory postCategory = PostCategory.of(requestDto);
+        return postCategoryMapper.convertToDto(
+                postCategoryRepository.save(postCategory)
+        );
     }
 
     @Override
     @Transactional
     public int deletePostCategory(long postCategoryId) {
-        postCategoryRepository.delete(readPostCategory(postCategoryId));
+        postCategoryRepository.delete(
+                postCategoryRepository
+                        .findById(postCategoryId)
+                        .orElseThrow()
+        );
         return 1;
     }
 

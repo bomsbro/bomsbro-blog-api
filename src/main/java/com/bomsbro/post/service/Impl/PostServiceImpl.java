@@ -1,7 +1,9 @@
 package com.bomsbro.post.service.Impl;
 
 
+import com.bomsbro.post.model.dto.PostDto;
 import com.bomsbro.post.model.entity.Post;
+import com.bomsbro.post.model.mapper.PostMapper;
 import com.bomsbro.post.repository.PostRepository;
 import com.bomsbro.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +19,16 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final PostMapper postMapper;
 
     @Override
-    public List<Post> readAllPostList(Pageable pageable) {
-        return postRepository.findAll(pageable).toList();
+    public List<PostDto> readAllPostList(Pageable pageable) {
+        return postMapper.convertEntityListToDto(postRepository.findAll(pageable).toList());
     }
 
     @Override
-    public List<Post> readPostList(long postCategoryId, Pageable pageable) {
-        return postRepository.findPostsByPostCategoryId(postCategoryId, pageable).toList();
+    public List<PostDto> readPostList(long postCategoryId, Pageable pageable) {
+        return postMapper.convertEntityListToDto(postRepository.findPostsByPostCategoryId(postCategoryId, pageable).toList());
     }
 
     @Override
@@ -36,27 +39,33 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Post createPost(Post post) {
-        return postRepository.save(post);
+    public PostDto createPost(PostDto postDto) {
+        Post post = postMapper.convertToEntity(postDto);
+        return postMapper.convertToDto(postRepository.save(post));
     }
 
     @Override
-    public Post readPost(long postId) {
-        return postRepository
+    public PostDto readPost(long postId) {
+        return postMapper.convertToDto(postRepository
                 .findById(postId)
-                .orElseThrow();
+                .orElseThrow());
     }
 
     @Override
     @Transactional
-    public Post updatePost(Post post) {
-        return postRepository.save(post);
+    public PostDto updatePost(PostDto postDto) {
+        Post post = postMapper.convertToEntity(postDto);
+        return postMapper.convertToDto(postRepository.save(post));
     }
 
     @Override
     @Transactional
     public int deletePost(long postId) {
-        postRepository.delete(readPost(postId));
+        postRepository.delete(
+                postRepository
+                .findById(postId)
+                .orElseThrow()
+        );
         return 1;
     }
 

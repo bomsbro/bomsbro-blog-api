@@ -16,15 +16,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
-    //TODO: Controller 에서 Dto<->Entity 전환
     //TODO: DtoWrapper? ResponseEntity? 로 감싸서 response
     private final CommentService commentService;
-    private final CommentMapper commentMapper;
 
     /*CommentList Get Patch*/
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<ResponseWrapper<List<CommentDto>>> getCommentList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
-        List<CommentDto> comments = commentMapper.convertEntityListToDto(commentService.readCommentList());
+        List<CommentDto> comments = commentService.readCommentList();
         return ResponseWrapper.ok(comments, "get post list success.");
     }
 
@@ -37,24 +35,22 @@ public class CommentController {
 
     /*Comment Post Get Put Delete */
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<ResponseWrapper<CommentDto>>  postComment ( @RequestBody CommentDto requestDto) {
+    public ResponseEntity<ResponseWrapper<CommentDto>>  postComment ( @RequestBody CommentDto.PostRequest requestDto) {
         //with path variable and body and optional param
-        Comment comment = commentMapper.convertToEntity(requestDto);
-        CommentDto responseDto = commentMapper.convertToDto(commentService.createComment(comment));
+        CommentDto responseDto = commentService.createComment(requestDto);
 
         return ResponseWrapper.created(responseDto, "Create Comment Success.");
     }
     @GetMapping("/comments/{commentId}")
     public ResponseEntity<ResponseWrapper<CommentDto>>  getComment (@PathVariable Long commentId) {
         //path variable and optional param
-        CommentDto comment = commentMapper.convertToDto(commentService.readComment(commentId));
-        return ResponseWrapper.ok(comment, "get post list success.");
+        CommentDto responseDto = commentService.readComment(commentId);
+        return ResponseWrapper.ok(responseDto, "get post list success.");
     }
     @PutMapping("/comments/{commentId}")
-    public ResponseEntity<CommentDto>  putComment (@PathVariable Long commentId, @RequestBody CommentDto requestDto) {
+    public ResponseEntity<CommentDto>  putComment (@PathVariable Long commentId, @RequestBody CommentDto.PutRequest requestDto) {
         //path variable and body optional param
-        Comment comment = commentMapper.convertToEntity(requestDto);
-        commentService.updateComment(comment);
+        commentService.updateComment(requestDto);
         return null;
     }
     @DeleteMapping("/comments/{commentId}")

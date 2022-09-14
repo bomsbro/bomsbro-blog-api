@@ -1,6 +1,8 @@
 package com.bomsbro.post.service.Impl;
 
+import com.bomsbro.post.model.dto.CommentDto;
 import com.bomsbro.post.model.entity.Comment;
+import com.bomsbro.post.model.mapper.CommentMapper;
 import com.bomsbro.post.repository.CommentRepository;
 import com.bomsbro.post.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,11 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
     @Override
-    public List<Comment> readCommentList() {
-        return commentRepository.findAll();
+    public List<CommentDto> readCommentList() {
+        return commentMapper.convertEntityListToDto(commentRepository.findAll());
     }
 
     @Override
@@ -29,27 +32,37 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment createComment(Comment comment) {
-        return commentRepository.save(comment);
+    public CommentDto createComment(CommentDto.PostRequest requestDto) {
+        Comment comment = commentMapper.convertToEntity(requestDto);
+        return commentMapper.convertToDto(commentRepository.save(comment));
     }
 
     @Override
-    public Comment readComment(long commentId) {
-        return commentRepository
+    public CommentDto readComment(long commentId) {
+        return commentMapper.convertToDto(
+                commentRepository
                 .findById(commentId)
-                .orElseThrow();
+                .orElseThrow()
+        );
     }
 
     @Override
     @Transactional
-    public Comment updateComment(Comment comment) {
-        return commentRepository.save(comment);
+    public CommentDto updateComment(CommentDto.PutRequest requestDto) {
+        Comment comment = commentMapper.convertToEntity(requestDto);
+        return commentMapper.convertToDto(
+                commentRepository.save(comment)
+        );
     }
 
     @Override
     @Transactional
     public int deleteComment(long commentId) {
-        commentRepository.delete(readComment(commentId));
+        commentRepository.delete(
+                commentRepository
+                .findById(commentId)
+                .orElseThrow()
+        );
         return 1;
     }
 

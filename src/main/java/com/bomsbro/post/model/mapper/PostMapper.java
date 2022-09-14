@@ -13,7 +13,9 @@ import java.util.List;
 public interface PostMapper extends GenericMapper<Post, PostDto> {
 
     @Mapping(source = "postCategory.id", target = "postCategoryId")
-    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "postCategory.name", target = "postCategoryName")
+    @Mapping(source = "user.id", target = "writerId")
+    @Mapping(source = "user.name", target = "writerName")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     PostDto convertToDto(Post post);
 

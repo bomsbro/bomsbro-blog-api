@@ -21,25 +21,25 @@ public class PostCategoryDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime modifiedDate;
 
-    //Request DTO
+    //Request DTO. Get, Delete does not have request body.
     @Setter @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PatchPostCategoryListRequestDto {
+    public static class PostRequest {
         private String name;
     }
 
     @Setter @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PostPostCategoryRequestDto {
+    public static class PutRequest {
         private String name;
     }
 
     @Setter @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PutPostCategoryRequestDto {
+    public static class ListPatchRequest {
         private String name;
     }
 }

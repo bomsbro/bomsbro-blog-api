@@ -7,6 +7,12 @@ server:
       enabled: true
       force: true
 spring:
+  # For Pagination
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
   mvc:
     pathmatch:
       # For Swagger 3.0

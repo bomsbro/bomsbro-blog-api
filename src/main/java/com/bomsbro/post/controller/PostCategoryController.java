@@ -25,13 +25,12 @@ import java.util.List;
 public class PostCategoryController {
 
     private final PostCategoryService postCategoryService;
-    private final PostCategoryMapper postCategoryMapper;
 
     /*PostCategoryList Get Patch*/
     @GetMapping("")
     public ResponseEntity<ResponseWrapper<List<PostCategoryDto>>> getPostCategoryList (@RequestParam HashMap<String, String> paramMap, SpringDataWebProperties.Pageable pageable) {
-        List<PostCategoryDto> postCategorys = postCategoryMapper.convertEntityListToDto(postCategoryService.readPostCategoryList());
-        return ResponseWrapper.ok(postCategorys, "Get post category list success.");
+        List<PostCategoryDto> postCategories = postCategoryService.readPostCategoryList();
+        return ResponseWrapper.ok(postCategories, "Get post category list success.");
     }
 
     @PatchMapping("")
@@ -43,29 +42,24 @@ public class PostCategoryController {
 
     /*PostCategory Post Get Put Delete */
     @PostMapping("")
-    public ResponseEntity<ResponseWrapper<PostCategoryDto>>  postPostCategory ( @RequestBody PostCategoryDto.PostPostCategoryRequestDto requestDto) {
-        //with path variable and body and optional param
+    public ResponseEntity<ResponseWrapper<PostCategoryDto>>  postPostCategory ( @RequestBody PostCategoryDto.PostRequest requestDto) {
         PostCategory postCategory = PostCategory.of(requestDto);
-        PostCategoryDto responseDto = postCategoryMapper.convertToDto(postCategoryService.createPostCategory(postCategory));
+        PostCategoryDto responseDto = postCategoryService.createPostCategory(requestDto);
 
         return ResponseWrapper.created(responseDto, "Post post category Success.");
     }
     @GetMapping("/{postCategoryId}")
     public ResponseEntity<ResponseWrapper<PostCategoryDto>>  getPostCategory (@PathVariable Long postCategoryId) {
-        //path variable and optional param
-        PostCategoryDto postCategory = postCategoryMapper.convertToDto(postCategoryService.readPostCategory(postCategoryId));
+        PostCategoryDto postCategory = postCategoryService.readPostCategory(postCategoryId);
         return ResponseWrapper.ok(postCategory, "Get post category success.");
     }
     @PutMapping("/{postCategoryId}")
-    public ResponseEntity<PostCategoryDto>  putPostCategory (@PathVariable Long postCategoryId, @RequestBody PostCategoryDto.PostPostCategoryRequestDto requestDto) {
-        //path variable and body optional param
-        PostCategory postCategory = PostCategory.of(requestDto);
-        postCategoryService.updatePostCategory(postCategory);
-        return null;
+    public ResponseEntity<ResponseWrapper<PostCategoryDto>>  putPostCategory (@PathVariable Long postCategoryId, @RequestBody PostCategoryDto.PutRequest requestDto) {
+        PostCategoryDto responseDto = postCategoryService.updatePostCategory(requestDto);
+        return ResponseWrapper.created(responseDto, "Post post category Success.");
     }
     @DeleteMapping("/{postCategoryId}")
     public ResponseEntity<PostCategoryDto>  deletePostCategory (@PathVariable Long postCategoryId) {
-        //path variable and optional param
         postCategoryService.deletePostCategory(postCategoryId);
         return null;
     }

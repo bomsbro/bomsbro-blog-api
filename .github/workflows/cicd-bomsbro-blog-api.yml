@@ -34,7 +34,7 @@ jobs:
           set timeout 5 \
           spawn sshpass -p $REMOTE_PASSWORD ssh -p $REMOTE_SSH_PORT $REMOTE_USERNAME@$REMOTE_HOST -o StrictHostKeyChecking=no \'docker image prune\' \
           expect \"[y/N]\" \
-          send \"y\n\" \
+          send \"y\" \
           exit 0 \
           "
 

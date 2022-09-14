@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto {
+
     private Long id;
+    private Long postCategoryId;
+    private Long userId;
+
     private String title;
     private String content;
     private String previewText;

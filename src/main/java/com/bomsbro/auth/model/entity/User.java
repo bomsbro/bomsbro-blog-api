@@ -19,22 +19,22 @@ public class User {
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     //Columns
     @NonNull
     @Column(name = "user_name", length=500, unique = true)
-    private String userName;
+    private String name;
 
     @NonNull
     @Column(name = "user_password",length = 100, unique = true)
-    private String userPassword;
+    private String password;
 
     @Column(name = "user_nickname", length=50, unique = true)
-    private String userNickname;
+    private String nickname;
 
     @Column(name = "user_activated")
-    private Boolean userActivated;
+    private Boolean activated;
 
     //Join
     @NonNull

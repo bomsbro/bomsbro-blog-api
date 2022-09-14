@@ -19,6 +19,11 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
+    public List<Post> readAllPostList(Pageable pageable) {
+        return postRepository.findAll(pageable).toList();
+    }
+
+    @Override
     public List<Post> readPostList(long postCategoryId, Pageable pageable) {
         return postRepository.findPostsByPostCategoryId(postCategoryId, pageable).toList();
     }

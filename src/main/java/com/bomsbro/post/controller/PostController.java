@@ -24,6 +24,12 @@ public class PostController {
     private final PostMapper postMapper;
 
     /*PostList Get Patch*/
+    @GetMapping("/posts")
+    public ResponseEntity<ResponseWrapper<List<PostDto>>> getPostList ( @RequestParam HashMap<String, String> paramMap, Pageable pageable) {
+        List<PostDto> posts = postMapper.convertEntityListToDto(postService.readAllPostList( pageable));
+        return ResponseWrapper.ok(posts, "get post list success.");
+    }
+
     @GetMapping("/post-categories/{postCategoryId}/posts")
     public ResponseEntity<ResponseWrapper<List<PostDto>>> getPostList (@PathVariable HashMap<String, String> pathMap, @RequestParam HashMap<String, String> paramMap, Pageable pageable) {
         long postCategoryId = Integer.parseInt(pathMap.get("postCategoryId"));

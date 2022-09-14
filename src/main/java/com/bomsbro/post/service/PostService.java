@@ -8,6 +8,7 @@ import java.util.List;
 public interface PostService {
 
     /*Post List CRUD*/
+    public List<Post> readAllPostList(Pageable pageable);
     public List<Post> readPostList(long postCategoryId, Pageable pageable);
     public int updatePostList();
 

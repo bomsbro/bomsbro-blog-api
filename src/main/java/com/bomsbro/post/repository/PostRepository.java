@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAll();
+    Page<Post> findAll(Pageable pageable);
 
     Page<Post> findPostsByPostCategoryId(Long postCategoryId, Pageable pageable);
 

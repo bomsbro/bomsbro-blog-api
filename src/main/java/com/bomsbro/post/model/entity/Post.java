@@ -1,6 +1,8 @@
 package com.bomsbro.post.model.entity;
 
 import com.bomsbro.global.model.entity.BaseTimeEntity;
+import com.bomsbro.auth.model.entity.User;
+
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -27,6 +29,10 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pca_id")
     private PostCategory postCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //Join
     @BatchSize(size = 40)

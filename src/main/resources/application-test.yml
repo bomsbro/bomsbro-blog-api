@@ -33,7 +33,7 @@ spring:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       format_sql: true
-      ddl-auto: create
+      ddl-auto: create-drop
   sql:
     init:
       mode: always

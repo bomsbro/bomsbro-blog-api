@@ -1,9 +1,10 @@
-package com.bomsbro.auth.config;
+package com.bomsbro.global.config;
 
 
-import com.bomsbro.auth.security.JwtAccessDeniedHandler;
-import com.bomsbro.auth.security.JwtAuthenticationEntryPoint;
-import com.bomsbro.auth.security.TokenProvider;
+import com.bomsbro.global.config.JwtSecurityConfig;
+import com.bomsbro.global.security.JwtAccessDeniedHandler;
+import com.bomsbro.global.security.JwtAuthenticationEntryPoint;
+import com.bomsbro.global.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

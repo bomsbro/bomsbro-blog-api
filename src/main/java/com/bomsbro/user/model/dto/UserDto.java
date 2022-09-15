@@ -1,7 +1,7 @@
-package com.bomsbro.auth.model.dto;
+package com.bomsbro.user.model.dto;
 
 
-import com.bomsbro.auth.model.entity.User;
+import com.bomsbro.user.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

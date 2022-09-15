@@ -1,4 +1,4 @@
-package com.bomsbro.auth.model.entity;
+package com.bomsbro.user.model.entity;
 
 
 import lombok.*;

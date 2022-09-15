@@ -1,7 +1,7 @@
-package com.bomsbro.auth.service;
+package com.bomsbro.user.service;
 
-import com.bomsbro.auth.model.entity.User;
-import com.bomsbro.auth.repository.UserRepository;
+import com.bomsbro.user.model.entity.User;
+import com.bomsbro.user.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

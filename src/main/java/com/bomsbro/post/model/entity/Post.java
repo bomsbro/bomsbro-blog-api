@@ -1,7 +1,7 @@
 package com.bomsbro.post.model.entity;
 
 import com.bomsbro.global.model.entity.BaseTimeEntity;
-import com.bomsbro.auth.model.entity.User;
+import com.bomsbro.user.model.entity.User;
 
 import lombok.*;
 import org.hibernate.annotations.BatchSize;

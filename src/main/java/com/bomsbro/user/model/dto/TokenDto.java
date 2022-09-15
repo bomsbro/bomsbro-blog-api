@@ -1,4 +1,4 @@
-package com.bomsbro.auth.model.dto;
+package com.bomsbro.user.model.dto;
 
 import lombok.*;
 

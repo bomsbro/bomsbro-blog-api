@@ -1,9 +1,9 @@
-package com.bomsbro.auth.controller;
+package com.bomsbro.user.controller;
 
-import com.bomsbro.auth.model.dto.LoginDto;
-import com.bomsbro.auth.model.dto.TokenDto;
-import com.bomsbro.auth.security.JwtFilter;
-import com.bomsbro.auth.security.TokenProvider;
+import com.bomsbro.user.model.dto.LoginDto;
+import com.bomsbro.user.model.dto.TokenDto;
+import com.bomsbro.global.security.JwtFilter;
+import com.bomsbro.global.security.TokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

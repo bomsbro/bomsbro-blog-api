@@ -16,5 +16,12 @@ docker save $IMAGE_REPOSITORY | bzip2 | sshpass -p $REMOTE_PASSWORD ssh -p $REMO
 sshpass -p $REMOTE_PASSWORD ssh -p $REMOTE_SSH_PORT $REMOTE_USERNAME@$REMOTE_HOST -o StrictHostKeyChecking=no << EOF
 	docker rm -f $IMAGE_REPOSITORY || true
 	docker run -d -p 8080:8080 --name $IMAGE_REPOSITORY --restart always -e ACTIVE=prod $IMAGE_REPOSITORY
+	expect -c "
+		set timeout 5
+		spawn docker image prune
+		expect -nocase \"\[y/N\]\"
+		send \"y\"
+		exit 0
+	"
 	exit
 EOF

@@ -2,7 +2,7 @@ name: bomsbro-blog-api
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
     
 jobs:
   build:

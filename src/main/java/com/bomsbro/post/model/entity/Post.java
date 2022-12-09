@@ -1,5 +1,6 @@
 package com.bomsbro.post.model.entity;
 
+import com.bomsbro.file.model.entity.File;
 import com.bomsbro.global.model.entity.BaseTimeEntity;
 import com.bomsbro.user.model.entity.User;
 
@@ -34,11 +35,6 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //Join
-    @BatchSize(size = 40)
-    @OneToMany(mappedBy = "post") // TODO cascade/delete-yn
-    private final List<Comment> comments = new ArrayList<>();
-
     //Columns
     @Column(name = "post_title")
     private String title;
@@ -55,4 +51,14 @@ public class Post extends BaseTimeEntity {
 
     @Column(name = "post_reply_count")
     private Long replyCount;
+
+    //Join
+    @BatchSize(size = 40)
+    @OneToMany(mappedBy = "post") // TODO cascade/delete-yn
+    private final List<Comment> comments = new ArrayList<>();
+
+    //Join
+    @BatchSize(size = 40)
+    @OneToMany(mappedBy = "post") // TODO cascade/delete-yn
+    private final List<File> files = new ArrayList<>();
 }

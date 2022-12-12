@@ -10,7 +10,7 @@ import java.io.InputStream;
 @Configuration
 public class FileManagerConfig {
     @Bean
-    public FileManager fileManager( String objectName, InputStream inputStream) {
-        return new FileManager("bomsbro-blog-files", objectName, inputStream);
+    public FileManager fileManager() {
+        return new FileManager("http://bomsbro.com:9001", "bomsbro-blog-api", "a1a2a3a4", "bomsbro-blog-files");
     }
 }

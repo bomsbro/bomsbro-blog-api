@@ -13,10 +13,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FileMapper extends GenericMapper<File, FileDto> {
 
-    @Mapping(source = "fileCategory.id", target = "fileCategoryId")
-    @Mapping(source = "fileCategory.name", target = "fileCategoryName")
-    @Mapping(source = "user.id", target = "writerId")
-    @Mapping(source = "user.name", target = "writerName")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     FileDto convertToDto(File file);
 

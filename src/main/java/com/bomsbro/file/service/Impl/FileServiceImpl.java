@@ -6,6 +6,7 @@ import com.bomsbro.file.model.entity.File;
 import com.bomsbro.file.model.mapper.FileMapper;
 import com.bomsbro.file.repository.FileRepository;
 import com.bomsbro.file.service.FileService;
+import com.bomsbro.global.minio.FileManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,13 @@ public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
     private final FileMapper fileMapper;
+    private final FileManager fileManager;
+
+
+    @Override
+    public String readUploadUrl(String fileName) {
+        return fileManager.getPresignedObjectUrl(fileName);
+    }
 
     @Override
     public List<FileDto> readAllFileList(Pageable pageable) {
@@ -27,8 +35,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FileDto> readFileList(long fileCategoryId, Pageable pageable) {
-        return fileMapper.convertEntityListToDto(fileRepository.findFilesByFileCategoryId(fileCategoryId, pageable).toList());
+    public List<FileDto> readFileList(long fileId, Pageable pageable) {
+        return fileMapper.convertEntityListToDto(fileRepository.findFilesByFileId(fileId, pageable).toList());
     }
 
     @Override
@@ -47,7 +55,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public FileDto readFile(long fileId) {
         return fileMapper.convertToDto(fileRepository
-                .findById(fileId)
+                .findByFileId(fileId)
                 .orElseThrow());
     }
 
@@ -63,7 +71,7 @@ public class FileServiceImpl implements FileService {
     public int deleteFile(long fileId) {
         fileRepository.delete(
                 fileRepository
-                .findById(fileId)
+                .findByFileId(fileId)
                 .orElseThrow()
         );
         return 1;

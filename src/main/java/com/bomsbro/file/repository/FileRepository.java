@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface FileRepository extends JpaRepository<File, Long> {
     Page<File> findAll(Pageable pageable);
 
-    Page<File> findFilesByFileCategoryId(Long fileCategoryId, Pageable pageable);
+    Page<File> findFilesByFileId(Long fileId, Pageable pageable);
 
-    Optional<File> findById(long fileId);
+    Optional<File> findByFileId(long fileId);
 
     File save(File file);
 

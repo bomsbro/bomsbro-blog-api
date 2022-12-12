@@ -24,7 +24,7 @@ public class File extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_file")
     @Column(name = "file_id")
-    private Long id;
+    private Long fileId;
 
     //FK
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,20 +32,19 @@ public class File extends BaseTimeEntity {
     private Post post;
 
     //Columns
-    @Column(name = "file_title")
-    private String title;
+    @Column(name = "file_name", unique=true)
+    private Long fileName;
+
+    @Column(name = "file_org_name")
+    private String fileOrgName;
 
     @Lob
-    @Column(name = "file_content")
-    private String content;
+    @Column(name = "file_extension")
+    private String fileExtension;
 
-    @Column(name = "file_preview_text")
-    private String previewText;
+    @Column(name = "file_size")
+    private String fileSize;
 
-    @Column(name = "file_view_count")
-    private Long viewCount;
-
-    @Column(name = "file_reply_count")
-    private Long replyCount;
-
+    @Column(name = "file_url")
+    private String fileUrl;
 }

@@ -1,11 +1,13 @@
 package com.bomsbro.post.service.Impl;
 
 
+import com.bomsbro.global.minio.FileManager;
 import com.bomsbro.post.model.dto.PostDto;
 import com.bomsbro.post.model.entity.Post;
 import com.bomsbro.post.model.mapper.PostMapper;
 import com.bomsbro.post.repository.PostRepository;
 import com.bomsbro.post.service.PostService;
+import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
+    private final FileManager fileManager;
 
     @Override
     public List<PostDto> readAllPostList(Pageable pageable) {
@@ -42,6 +45,7 @@ public class PostServiceImpl implements PostService {
     public PostDto createPost(PostDto postDto) {
         Post post = postMapper.convertToEntity(postDto);
         return postMapper.convertToDto(postRepository.save(post));
+
     }
 
     @Override

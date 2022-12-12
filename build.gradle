@@ -49,6 +49,9 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+    //for MinIO https://mvnrepository.com/artifact/io.minio/minio
+    implementation group: 'io.minio', name: 'minio', version: '8.4.5'
+
     //for test
     implementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

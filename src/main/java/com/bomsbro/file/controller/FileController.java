@@ -44,7 +44,7 @@ public class FileController {
 
     /*File File Get Put Delete */
     @PostMapping("")
-    public ResponseEntity<ResponseWrapper<FileDto>>  fileFile ( @RequestBody FileDto requestDto) {
+    public ResponseEntity<ResponseWrapper<FileDto>>  postFile ( @RequestBody FileDto requestDto) {
         //with path variable and body and optional param
 
         FileDto responseDto = fileService.createFile(requestDto);

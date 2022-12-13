@@ -11,6 +11,6 @@ import java.io.InputStream;
 public class FileManagerConfig {
     @Bean
     public FileManager fileManager() {
-        return new FileManager("http://bomsbro.com:9001", "bomsbro-blog-api", "a1a2a3a4", "bomsbro-blog-files");
+        return new FileManager("http://sotrage.bomsbro.com/api", "bomsbro-blog-api", "a1a2a3a4", "bomsbro-blog-files");
     }
 }

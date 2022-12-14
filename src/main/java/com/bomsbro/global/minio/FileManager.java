@@ -35,12 +35,11 @@ public class FileManager {
 
                 url = minioClient.getPresignedObjectUrl(
                                 GetPresignedObjectUrlArgs.builder()
-                                        .method(Method.HEAD)
+                                        .method(Method.GET)
                                         .bucket(this.bucketName)
                                         .object(objectName)
                                         .expiry(2, TimeUnit.HOURS)
                                         .build());
-                System.out.println(url);
             }
         } catch (Exception e) {
             System.out.println("Error occurred: " + e);

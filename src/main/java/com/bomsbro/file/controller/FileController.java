@@ -23,7 +23,6 @@ public class FileController {
     /*FileList Get Patch*/
     @GetMapping("/upload-url")
     public ResponseEntity<ResponseWrapper<String>> getUploadUrl (@RequestParam HashMap<String, String> paramMap) {
-        System.out.println(paramMap.get("fileName"));
         String uploadUrl = fileService.readUploadUrl(paramMap.get("fileName"));
         return ResponseWrapper.ok(uploadUrl, "get file upload url success.");
     }

@@ -7,8 +7,6 @@ import org.hibernate.annotations.Where;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-
-import java.sql.Clob;
 import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.PROTECTED;

@@ -10,7 +10,7 @@ class ExistsGatewayTest{
 
     @Test
     fun call(){
-        val exists = existsGateway.findBy("test.txt")
+        val exists = existsGateway.findBy("TEST_2a1fa4ac-dbff-425a-aa3b-8739a0a3ef8b")
         assertTrue(exists)
     }
 }

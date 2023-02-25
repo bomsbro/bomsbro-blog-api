@@ -1,7 +1,6 @@
 package com.bomsbro.board.gateway.external
 
 import com.bomsbro.board.domain.BoardFile
-import com.bomsbro.file.model.entity.File
 import io.minio.MinioClient
 import io.minio.ObjectWriteResponse
 import io.minio.PutObjectArgs
@@ -19,11 +18,14 @@ sealed interface UploadGateway {
         private val minioClient: MinioClient,
         @Value("\${minio.bucket}") private val bucket: String
     ) : UploadGateway {
-        override fun uploadFile(request: UploadRequest): ObjectWriteResponse = minioClient.putObject(
-            PutObjectArgs.builder().bucket(bucket).`object`(request.fileName)
-                .stream(request.file.inputStream(), -1, BUFFER_SIZE).build());
+        override fun uploadFile(request: UploadRequest): ObjectWriteResponse = minioClient.putObject(putArgs(request));
 
-        companion object{
+        private fun putArgs(request: UploadRequest): PutObjectArgs = PutObjectArgs.builder()
+            .bucket(bucket)
+            .`object`(request.fileName)
+            .stream(request.file.inputStream(), -1, BUFFER_SIZE).build()
+
+        companion object {
             const val BUFFER_SIZE = 1024 * 1024 * 5L
         }
     }
@@ -31,10 +33,10 @@ sealed interface UploadGateway {
     data class UploadRequest(
         val file: Path,
         val fileName: String
-    ){
+    ) {
 
-        companion object{
-            fun toRequest(file: BoardFile): UploadRequest = UploadRequest(file.file,file.fileName)
+        companion object {
+            fun toRequest(file: BoardFile): UploadRequest = UploadRequest(file.file, file.fileName)
         }
     }
 }

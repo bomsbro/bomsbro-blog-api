@@ -3,10 +3,10 @@ package com.bomsbro.board.domain
 import java.util.*
 
 data class Board(
-    private val uuid: UUID,
-    private val title:String,
-    private val content:String,
-    private val writer:String,
-    private val uploadDate:String,
-    private val updateDate:String
+    val uuid: UUID,
+    val title: String,
+    val content: String,
+    val writer: String,
+    val uploadDate: String,
+    val updateDate: String
 )

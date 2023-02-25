@@ -28,14 +28,14 @@ sealed interface UploadGateway {
         }
     }
 
-}
+    data class UploadRequest(
+        val file: Path,
+        val fileName: String
+    ){
 
-data class UploadRequest(
-    val file: Path,
-    val fileName: String
-){
-
-    companion object{
-        fun toRequest(file: BoardFile): UploadRequest = UploadRequest(file.file,file.fileName)
+        companion object{
+            fun toRequest(file: BoardFile): UploadRequest = UploadRequest(file.file,file.fileName)
+        }
     }
 }
+

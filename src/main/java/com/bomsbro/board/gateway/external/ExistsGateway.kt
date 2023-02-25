@@ -13,7 +13,9 @@ sealed interface ExistsGateway {
         private val minioClient: MinioClient,
         @Value("\${minio.bucket}") private val bucket: String
     ) : ExistsGateway {
-        override fun findBy(fileName: String): Boolean = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
+        override fun findBy(fileName: String): Boolean = minioClient.bucketExists(bucketExistsArgs());
+
+        private fun bucketExistsArgs(): BucketExistsArgs = BucketExistsArgs.builder().bucket(bucket).build()
     }
 
 }

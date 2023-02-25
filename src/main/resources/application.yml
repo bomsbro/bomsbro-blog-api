@@ -6,3 +6,4 @@ minio:
   url: https://s3.bomsbro.com
   id: bomsbro-blog-api
   password: a1a2a3a4
+  bucket: bomsbro-blog-files

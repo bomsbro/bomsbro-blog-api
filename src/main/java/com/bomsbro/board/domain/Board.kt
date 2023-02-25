@@ -1,5 +1,6 @@
 package com.bomsbro.board.domain
 
+import java.time.LocalDateTime
 import java.util.*
 
 data class Board(
@@ -7,6 +8,10 @@ data class Board(
     val title: String,
     val content: String,
     val writer: String,
-    val uploadDate: String,
-    val updateDate: String
-)
+    val uploadDate: LocalDateTime,
+    val updateDate: LocalDateTime
+){
+    init {
+
+    }
+}

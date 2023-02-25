@@ -12,11 +12,9 @@ class UploadGatewayTest {
 
     @Test
     fun call() {
-        val uploadFile = uploadGateway.uploadFile(
-            UploadGateway.UploadRequest(
-                Paths.get("./test.txt"),
-                "TEST_${UUID.randomUUID()}"
-            )
+        val uploadFile = uploadGateway.uploadFile(UploadGateway.UploadRequest(Paths.get("./test.txt"),
+            "TEST_${UUID.randomUUID()}"
+        )
         )
 
         Assertions.assertThat(uploadFile.etag()).isNotNull()

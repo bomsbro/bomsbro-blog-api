@@ -45,6 +45,7 @@ dependencies {
 
     //for h2 database local
     runtimeOnly 'com.h2database:h2'
+    testImplementation 'com.h2database:h2'
 
     //for Jwt
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'

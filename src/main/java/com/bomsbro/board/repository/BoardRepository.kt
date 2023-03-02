@@ -4,23 +4,22 @@ import com.bomsbro.board.domain.Board
 import com.bomsbro.board.repository.jpa.board.BoardReadJpaRepository
 import com.bomsbro.board.repository.jpa.board.BoardWriteEntity
 import com.bomsbro.board.repository.jpa.board.BoardWriteJpaRepository
+import org.checkerframework.common.aliasing.qual.Unique
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 interface BoardRepository {
-    fun save(request: Board)
+    fun firstInit(): Long
 
     @Repository
-    class BoardRdbmsRepository(
+    open class BoardRdbmsRepository(
         private val boardReadJpaRepository: BoardReadJpaRepository,
         private val boardWriteJpaRepository: BoardWriteJpaRepository
     ) : BoardRepository {
-        override fun save(request: Board) {
-            val exists = boardWriteJpaRepository.existsByUuid(request.uuid)
-            require(exists){"이미 존재하는 게시글입니다."}
-
-            boardWriteJpaRepository.save(BoardWriteEntity(request))
-        }
-
-
+        @Transactional
+        override fun firstInit(): Long = boardWriteJpaRepository
+            .save(BoardWriteEntity.first())
+            .id()
     }
 }

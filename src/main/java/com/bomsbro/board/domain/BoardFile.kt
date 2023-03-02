@@ -4,9 +4,11 @@ import java.nio.file.Path
 import java.time.LocalDateTime
 
 data class BoardFile(
-    val uploadDate: LocalDateTime,
     val fileName: String,
-    val file: Path
+    val file: Path,
+    val boardStatus: BoardStatus,
+    val uploadDate: LocalDateTime,
+    val updateDate: LocalDateTime
 ) {
 
 }

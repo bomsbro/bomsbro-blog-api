@@ -7,6 +7,7 @@ import com.bomsbro.global.model.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -60,13 +61,19 @@ public class BoardWriteEntity extends BaseTimeEntity {
 
     public Board toDomain() {
         return new Board(
+                this.id,
                 this.title,
                 this.content,
                 this.writer,
-                this.deleted,
-                this.boardStatus,
-                super.createdDate,
-                super.modifiedDate
+                this.boardStatus
         );
+    }
+
+    public void update(Board board) {
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.writer = board.getWriter();
+        this.deleted = Boolean.FALSE;
+        this.boardStatus = board.getBoardStatus();
     }
 }

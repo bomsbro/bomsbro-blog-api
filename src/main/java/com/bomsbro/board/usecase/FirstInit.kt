@@ -3,7 +3,6 @@ package com.bomsbro.board.usecase
 import com.bomsbro.board.gateway.external.ExistsGateway
 import com.bomsbro.board.gateway.external.UploadGateway
 import com.bomsbro.board.repository.BoardRepository
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 interface FirstInit {

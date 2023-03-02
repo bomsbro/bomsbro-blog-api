@@ -2,20 +2,22 @@ package com.bomsbro.board.repository.jpa.board;
 
 
 import com.bomsbro.board.domain.Board;
+import com.bomsbro.board.domain.BoardStatus;
 import com.bomsbro.global.model.entity.BaseTimeEntity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.checkerframework.common.aliasing.qual.Unique;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLDeleteAll;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
+@Getter
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "board")
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "UPDATE board SET deleted = true WHERE id = ?")
@@ -25,20 +27,46 @@ public class BoardWriteEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Unique
-    private UUID uuid;
     private String title;
     @Lob
     private String content;
     private String writer;
 
+    private Boolean deleted;
+    @Enumerated(EnumType.STRING)
+    private BoardStatus boardStatus;
 
-    public BoardWriteEntity(Board board) {
-        this.uuid = board.getUuid();
-        this.title = board.getTitle();
-        this.content = board.getContent();
-        this.writer = board.getWriter();
-        super.createdDate = board.getUploadDate();
-        this.modifiedDate = board.getUpdateDate();
+    public BoardWriteEntity(
+            String title,
+            String content,
+            String writer,
+            Boolean deleted,
+            BoardStatus boardStatus
+    ) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.deleted = deleted;
+        this.boardStatus = boardStatus;
+    }
+
+    public static BoardWriteEntity first() {
+        return new BoardWriteEntity("", "", "", Boolean.FALSE, BoardStatus.PENDING);
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public Board toDomain() {
+        return new Board(
+                this.title,
+                this.content,
+                this.writer,
+                this.deleted,
+                this.boardStatus,
+                super.createdDate,
+                super.modifiedDate
+        );
     }
 }

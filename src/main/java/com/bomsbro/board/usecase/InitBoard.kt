@@ -5,15 +5,13 @@ import com.bomsbro.board.gateway.external.UploadGateway
 import com.bomsbro.board.repository.BoardRepository
 import org.springframework.stereotype.Service
 
-interface FirstInit {
+interface InitBoard {
     fun firstInit(): Long
 
     @Service
-    class FirstInitUseCase(
+    class InitBoardUseCase(
         private val boardRepository: BoardRepository,
-        private val existsGateway: ExistsGateway,
-        private val uploadGateway: UploadGateway
-    ) : FirstInit {
+    ) : InitBoard {
         override fun firstInit() = boardRepository.firstInit()
     }
 

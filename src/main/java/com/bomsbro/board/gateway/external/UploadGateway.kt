@@ -11,14 +11,15 @@ import kotlin.io.path.inputStream
 
 
 sealed interface UploadGateway {
-    fun uploadFile(request: UploadRequest): ObjectWriteResponse
+    fun uploadFile(request: BoardFile): ObjectWriteResponse
 
     @Component
     class UploadHttpGateway(
         private val minioClient: MinioClient,
         @Value("\${minio.bucket}") private val bucket: String
     ) : UploadGateway {
-        override fun uploadFile(request: UploadRequest): ObjectWriteResponse = minioClient.putObject(putArgs(request));
+        override fun uploadFile(domain: BoardFile): ObjectWriteResponse = minioClient
+            .putObject(putArgs(UploadRequest.toRequest(domain)));
 
         private fun putArgs(request: UploadRequest): PutObjectArgs = PutObjectArgs.builder()
             .bucket(bucket)

@@ -7,7 +7,6 @@ import com.bomsbro.global.model.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -27,7 +26,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class BoardWriteEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long boardId;
     private String title;
     @Lob
     private String content;
@@ -56,12 +55,12 @@ public class BoardWriteEntity extends BaseTimeEntity {
     }
 
     public Long id() {
-        return id;
+        return boardId;
     }
 
     public Board toDomain() {
         return new Board(
-                this.id,
+                this.boardId,
                 this.title,
                 this.content,
                 this.writer,

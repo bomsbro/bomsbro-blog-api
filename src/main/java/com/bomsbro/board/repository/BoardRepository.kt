@@ -1,6 +1,7 @@
 package com.bomsbro.board.repository
 
 import com.bomsbro.board.domain.Board
+import com.bomsbro.board.domain.BoardFile
 import com.bomsbro.board.repository.jpa.board.BoardReadJpaRepository
 import com.bomsbro.board.repository.jpa.board.BoardWriteEntity
 import com.bomsbro.board.repository.jpa.board.BoardWriteJpaRepository
@@ -13,8 +14,7 @@ interface BoardRepository {
     fun updateBoard(board: Board): Any
 
     @Repository
-    @Transactional
-    open class BoardRdbmsRepository(
+   open class BoardRdbmsRepository(
         private val boardReadJpaRepository: BoardReadJpaRepository,
         private val boardWriteJpaRepository: BoardWriteJpaRepository
     ) : BoardRepository {

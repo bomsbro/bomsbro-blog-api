@@ -1,14 +1,13 @@
 package com.bomsbro.board.domain
 
 import java.nio.file.Path
-import java.time.LocalDateTime
 
 data class BoardFile(
+    val boardId: Long,
     val fileName: String,
     val file: Path,
     val boardStatus: BoardStatus,
-    val uploadDate: LocalDateTime,
-    val updateDate: LocalDateTime
 ) {
 
+    fun updatePath(path: Path): BoardFile = copy(file = path)
 }

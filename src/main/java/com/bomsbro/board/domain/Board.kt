@@ -1,10 +1,7 @@
 package com.bomsbro.board.domain
 
-import java.time.LocalDateTime
-import java.util.*
-
 data class Board(
-    val id: Long,
+    val id: Long  = 0L,
     val title: String,
     val content: String,
     val writer: String,

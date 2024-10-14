@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name="user")
+@Table(name="users")
 public class User {
     //PK
     @Id
